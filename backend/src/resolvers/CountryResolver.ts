@@ -23,17 +23,17 @@ export class CountryResolver {
   
     @Query(() => [Country])
     async getCountries() {
-      return await AppDataSource.getRepository(Country).find();
+      return await Country.find();
     }
 
     @Query(() => Country, { nullable: true })
     async getCountry(@Arg("code") code: string) {
-      return await AppDataSource.getRepository(Country).findOneBy({ code });
+      return await Country.findOneBy({ code });
     }
 
     @Query(() => [Country])
     async getCountriesByContinent(@Arg("continentCode") continentCode: string) {
-      return await AppDataSource.getRepository(Country).find({
+      return await Country.find({
         where: { continentCode },
       });
     }
@@ -41,7 +41,7 @@ export class CountryResolver {
     @Mutation(() => Country)
     async addCountry(@Arg("data") data: CountryInput) {
       const country = Object.assign(new Country(), data);
-      await AppDataSource.getRepository(Country).save(country);
+      await Country.save(country);
       return country;
     }
 }
